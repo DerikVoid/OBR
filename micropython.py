@@ -45,10 +45,12 @@ def CProp(): # Controle proporcional
     right_wheel.run(V - P)
     
 
-def Verificarcor ():
-
+def VerifiDistancia ():
+  ultS = UltrasonicSensor()
+  if  ultSF > 100:
+    left_wheel.stop(50)
+    right_wheel.stop(50)
     
-                
 while True:
    # verificarLuz()
     CProp() 
