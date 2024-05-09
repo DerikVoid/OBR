@@ -8,29 +8,40 @@ from pybricks.robotics import DriveBase
 from pybricks.media.ev3dev import SoundFile, ImageFile
 
 
+# This program requires LEGO EV3 MicroPython v2.0 or higher.
+# Click "Open user guide" on the EV3 extension tab for more information.
+
+
+# Create your objects here.
+ev3 = EV3Brick()
+
 # Create your objects here.
 ev3 = EV3Brick()
 #medium_motor = Motor(Port.D)
 left_wheel = Motor(Port.A)
 right_wheel = Motor(Port.D)
-slE = ColorSensor(Port.S1)
-slD = ColorSensor(Port.S2)
-ultS = UltrasonicSensor()
-vlE = slE.reflection() # valor de reflexão esquerdo
-vlD = slD.reflection() # valor de reflexão direito
-vcD = slD.Color() # valor de cor direito
-vcE = slE.Color() # valor de cor esquerdo
-vlDE = vlE + vlD
+#slE = ColorSensor(Port.S1)
+#slD = ColorSensor(Port.S2)
+#ultS = UltrasonicSensor()
+#vlE = slE.reflection() # valor de reflexão esquerdo
+#vlD = slD.reflection() # valor de reflexão direito
+#vcD = slD.Color() # valor de cor direito
+#vcE = slE.Color() # valor de cor esquerdo
+#vlDE = vlE + vlD
 V = 200 # velocidade (deg/s)
 kP = 15 # coeficiente de correção
-slPreto =  # valor de cor preta
-vlPreto =  20 # valor de reflexão branca
-slBranco =   # valor de cor branca 
-vlBranco =  80 # valor de reflexão branca
+#lPreto =  # valor de cor preta
+#vlPreto =  20 # valor de reflexão branca
+#slBranco =   # valor de cor branca 
+#vlBranco =  80 # valor de reflexão branca
 # Write your program here.
-robot = DriveBase(left_motor, right_motor, wheel_diameter=55.5, axle_track=104)
+Alibaba = DriveBase(left_wheel, right_wheel, wheel_diameter=55.5, axle_track=104)
 
 #robot = DriveBase(left_wheel,right_wheel,wheel_diameter=55.5,axle_track=104)
+Alibaba.turn(245)
+Alibaba.straight(210)
+Alibaba.turn(-245)
+Alibaba.straight(155)    
 
 def VerLuz ():
     ev3.screen.print("E: ",vlE," D: ",vlD)
@@ -43,13 +54,16 @@ def CProp(): # Controle proporcional
     P = MgEr * kP # 
     left_wheel.run(V + P)
     right_wheel.run(V - P)
-    
+    if vlE == vlD:
+        left_wheel.run(V + P)
+        right_wheel.run(V - P)
+        
 
 def VerifiDistancia ():
   ultS = UltrasonicSensor()
   if  ultSF > 100:
-    left_wheel.stop(50)
-    right_wheel.stop(50)
+    Alibaba.turn(360)
+    Alibaba.run(40)
     
 while True:
    # verificarLuz()
