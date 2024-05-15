@@ -17,14 +17,17 @@ ev3 = EV3Brick()
 
 # Create your objects here.
 ev3 = EV3Brick()
-#medium_motor = Motor(Port.D)
-left_wheel = Motor(Port.A)
-right_wheel = Motor(Port.D)
+#Four_motor = Motor(Port.A)
+#Three_motor = Motor(Port.C)
+left_wheel = Motor(Port.D)
+right_wheel = Motor(Port.B)
 #slE = ColorSensor(Port.S1)
 #slD = ColorSensor(Port.S2)
 #ultS = UltrasonicSensor()
 #vlE = slE.reflection() # valor de reflexão esquerdo
 #vlD = slD.reflection() # valor de reflexão direito
+#amB1 = slD.ambient()
+#amB2 = slE.ambient()
 #vcD = slD.Color() # valor de cor direito
 #vcE = slE.Color() # valor de cor esquerdo
 #vlDE = vlE + vlD
@@ -38,12 +41,15 @@ kP = 15 # coeficiente de correção
 Alibaba = DriveBase(left_wheel, right_wheel, wheel_diameter=55.5, axle_track=104)
 
 #robot = DriveBase(left_wheel,right_wheel,wheel_diameter=55.5,axle_track=104)
+Alibaba = DriveBase(left_wheel, right_wheel, wheel_diameter=55.5, axle_track=104)
+def Test():
 Alibaba.turn(245)
 Alibaba.straight(210)
 Alibaba.turn(-245)
-Alibaba.straight(155)    
+Alibaba.straight(155)
+Alibaba.run_time(190, 10000)   
 
-def VerLuz ():
+def VerLuz():
     ev3.screen.print("E: ",vlE," D: ",vlD)
 
 
@@ -62,9 +68,15 @@ def CProp(): # Controle proporcional
 def VerifiDistancia ():
   ultS = UltrasonicSensor()
   if  ultSF > 100:
-    Alibaba.turn(360)
-    Alibaba.run(40)
+    Alibaba.turn(245)
+    Alibaba.straight(210)
+    Alibaba.turn(-245)
+    Alibaba.straight(155)
+
+def 
+
     
 while True:
    # verificarLuz()
-    CProp() 
+    VerLuz() 
+    Test()
