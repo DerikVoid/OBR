@@ -12,7 +12,7 @@ from pybricks.media.ev3dev import SoundFile, ImageFile
 
 # Create your objects here.
 ev3 = EV3Brick()
-#T = Motor(Port.C)
+#T = Motor(Port.D)
 L = Motor(Port.A)
 R = Motor(Port.B)
 slE = ColorSensor(Port.S2)
@@ -23,17 +23,18 @@ vultS = ultS.distance()
 vlE = slE.reflection() # valor de reflexão esquerdo
 vlD = slD.reflection() # valor de reflexão direito
 #vlM = slM.reflection() # valor de reflexão Meio
-#amB1 = slD.ambient()
-#amB2 = slE.ambient()
+amB1 = slD.ambient()
+amB2 = slE.ambient()
 #amB3 = slM.ambient()
 #vcD = slD.color() # valor de cor direito
 #vcE = slE.color() # valor de cor esquerdo
 #vcM = slM.color() # valor de cor Meio
 #vlDE = vlE + vlD
 V = 200 # velocidade (deg/s)
-kP = 7 # coeficiente de correção
+kP = 7
+ # coeficiente de correção
 #Green = ?
-#Alibaba = DriveBase(L,R,wheel_diameter=55.5,axle_track=104)
+Alibaba = DriveBase(L,R,wheel_diameter=55.5,axle_track=104)
 
 #robot = DriveBase(left_wheel,right_wheel,wheel_diameter=55.5,axle_track=104)
 def VerLuz(): #mostrar os valores da luz identificada na tela
@@ -42,35 +43,38 @@ def VerLuz(): #mostrar os valores da luz identificada na tela
 
 def CProp(): # Controle proporcional #corrige a direçâo que ele vai (continua seguindo a linha) (preto e branco)
     vlE = slE.reflection()
-    vlD = slD.reflection()
-    MgErE = vlD - vlE
-    MgErD = vlE - vlD 
-    while MgErE == 0 and MgErD == 0: # Margem de Erro
-        L.run(V)
-        R.run(V)
-        
+    vlD = slD.reflection() 
+    ev3.screen.print("E: ", vlE, "D: ", vlD) 
+    L.run(V)
+    R.run(V)
+
+def VFD(): #identificar obstáculos
+    vultS = ultS.distance()
+    if vultS == 50:
+        Alibaba.turn(245)
+        Alibaba.straight(210)
+        Alibaba.turn(-245)
+        Alibaba.straight(155)
+
+    
+
 def CProp2():
     vlE = slE.reflection()
     vlD = slD.reflection()
-    MgErE = vlD - vlE
-    MgErD = vlE - vlD
-    B1 = MgErE * kP
-    B2 = MgErD * kP
-    while MgErE != 0 and MgErD != 0:
-        B1 = MgErE * kP
-        B2 = MgErD * kP 
-        L.run(V + B1)
-        R.run(V + B2)
+    ev3.screen.print("E: ", vlE, "D: ", vlD)
+    if vlE < vlD:
+        L.run(-10)
+        R.run(V)
+    elif vlD < vlE:
+        R.run(-10)
+        L.run(V)  
+    else:
+        R.run(V+50)
+        L.run(V+50)  
 
     
+
         
-#def VFD(): #identificar obstáculos
-    #vultS = ultS.distance()
-    #while vultS == 20:
-    #Alibaba.turn(245)
-    #Alibaba.straight(210)
-    #Alibaba.turn(-245)
-    #Alibaba.straight(155)
 
 #def ICorG(): #identificar verde (para curvas)
     #if vcE == Green:
@@ -82,3 +86,6 @@ def CProp2():
 
 while True:
     CProp2()
+    VFD()
+    
+
