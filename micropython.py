@@ -23,8 +23,8 @@ vultS = ultS.distance()
 vlE = slE.reflection() # valor de reflexão esquerdo
 vlD = slD.reflection() # valor de reflexão direito
 #vlM = slM.reflection() # valor de reflexão Meio
-amB1 = slD.ambient()
-amB2 = slE.ambient()
+#amB1 = slD.ambient()
+#amB2 = slE.ambient()
 #amB3 = slM.ambient()
 #vcD = slD.color() # valor de cor direito
 #vcE = slE.color() # valor de cor esquerdo
@@ -48,16 +48,6 @@ def CProp(): # Controle proporcional #corrige a direçâo que ele vai (continua 
     L.run(V)
     R.run(V)
 
-def VFD(): #identificar obstáculos
-    vultS = ultS.distance()
-    if vultS == 50:
-        Alibaba.turn(245)
-        Alibaba.straight(210)
-        Alibaba.turn(-245)
-        Alibaba.straight(155)
-
-    
-
 def CProp2():
     vlE = slE.reflection()
     vlD = slD.reflection()
@@ -69,12 +59,22 @@ def CProp2():
         R.run(-10)
         L.run(V)  
     else:
-        R.run(V+50)
-        L.run(V+50)  
+        L.run(V)
+        R.run(V)
 
-    
+def VFD():
+  vultS = ultS.distance()
+  while vultS < 50: 
+        Alibaba.turn(245)
+        wait(20)
+        Alibaba.straight(210)
+        wait(20)
+        Alibaba.turn(-245)
+        wait(20)
+        Alibaba.straight(155)
+        wait(20)
+        vultS = ultS.distance()  
 
-        
 
 #def ICorG(): #identificar verde (para curvas)
     #if vcE == Green:
@@ -86,6 +86,5 @@ def CProp2():
 
 while True:
     CProp2()
-    VFD()
+    VFD()    
     
-
