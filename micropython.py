@@ -26,19 +26,20 @@ vlD = slD.reflection() # valor de reflexão direito
 #amB1 = slD.ambient()
 #amB2 = slE.ambient()
 #amB3 = slM.ambient()
-#vcD = slD.color() # valor de cor direito
-#vcE = slE.color() # valor de cor esquerdo
+vcD = slD.color() # valor de cor direito
+vcE = slE.color() # valor de cor esquerdo
 #vcM = slM.color() # valor de cor Meio
 #vlDE = vlE + vlD
 V = 200 # velocidade (deg/s)
 kP = 7
+i = 1
  # coeficiente de correção
 #Green = ?
 Alibaba = DriveBase(L,R,wheel_diameter=55.5,axle_track=104)
 
 #robot = DriveBase(left_wheel,right_wheel,wheel_diameter=55.5,axle_track=104)
 def VerLuz(): #mostrar os valores da luz identificada na tela
-    
+
     ev3.screen.print("E: ", vlE, "D: ", vlD)
 
 def CProp(): # Controle proporcional #corrige a direçâo que ele vai (continua seguindo a linha) (preto e branco)
@@ -63,8 +64,10 @@ def CProp2():
         R.run(V)
 
 def VFD():
-  vultS = ultS.distance()
-  while vultS < 50: 
+    vultS = ultS.distance()
+    if vultS > 50:
+        pass  
+    else:
         Alibaba.turn(245)
         wait(20)
         Alibaba.straight(210)
@@ -73,18 +76,31 @@ def VFD():
         wait(20)
         Alibaba.straight(155)
         wait(20)
-        vultS = ultS.distance()  
+        vultS = ultS.distance()
+    
 
 
-#def ICorG(): #identificar verde (para curvas)
-    #if vcE == Green:
-    #alibaba.turn(245)
-    #elif vcD == Green:
-    #alibaba.turn(-245)
-    #elif vcE and vcD == Green:
-    #alibaba.turn(590)
+# def ICorG(): 
+    # vlE = slE.reflection()
+    # vlD = slD.reflection()
+    # vcD = slD.color()
+    # vcE = slE.color()
+    # ev3.screen.print("E: ", vcE, "D: ", vcD)
+    # if vcE == Green:
+        # alibaba.turn(245)
+    # elif vcD == Green:
+        # alibaba.turn(-245)
+    # elif vcE and vcD == Green:
+        # alibaba.turn(590)
+        
+# def Modo_Cego():
 
 while True:
+    VFD()
+
+    if vultS <= 50:
+        break
+
     CProp2()
-    VFD()    
+      
     
