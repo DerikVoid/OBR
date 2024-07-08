@@ -31,43 +31,73 @@ vcE = slE.color() # valor de cor esquerdo
 #vcM = slM.color() # valor de cor Meio
 #vlDE = vlE + vlD
 V = 200 # velocidade (deg/s)
-kP = 7
+kP = 2
 i = 1
+
+
  # coeficiente de correção
 #Green = ?
 Alibaba = DriveBase(L,R,wheel_diameter=55.5,axle_track=104)
 
+
+while True:
+    vlE = slE.reflection()
+    vlD = slD.reflection()
+    ev3.screen.print("E: ", vlE, "D: ", vlD) 
+    vultS = ultS.distance()
+    if vultS < 120:
+        R.run_time(200,1000)
+        wait(20)
+        Alibaba.drive(200,200)
+        wait(20)
+        stop(300)
+        wait()
+        L.run_time(200,1200)
+        wait(20)
+    elif vlE < vlD:
+        L.run(-10)
+        R.run(V)
+    elif vlD < vlE:
+        R.run(-10)
+        L.run(V)  
+    elif vlD == vlE:
+        R.run(V)
+        L.run(V)
+    else:
+        L.run(0)
+        R.run(0)
+    
+
 #robot = DriveBase(left_wheel,right_wheel,wheel_diameter=55.5,axle_track=104)
 def VerLuz(): #mostrar os valores da luz identificada na tela
 
-    ev3.screen.print("E: ", vlE, "D: ", vlD)
+    ev3.screen.print("E: ", vcE, "D: ", vcD)
 
-def CProp(): # Controle proporcional #corrige a direçâo que ele vai (continua seguindo a linha) (preto e branco)
+def Seguir1(): # Controle proporcional #corrige a direçâo que ele vai (continua seguindo a linha) (preto e branco)
     vlE = slE.reflection()
     vlD = slD.reflection() 
     ev3.screen.print("E: ", vlE, "D: ", vlD) 
     L.run(V)
     R.run(V)
 
-def CProp2():
+def Seguir2():
     vlE = slE.reflection()
     vlD = slD.reflection()
-    ev3.screen.print("E: ", vlE, "D: ", vlD)
+    ev3.screen.print("E: ", vlE, "D: ", vlD) 
     if vlE < vlD:
         L.run(-10)
         R.run(V)
     elif vlD < vlE:
         R.run(-10)
         L.run(V)  
-    else:
-        L.run(V)
+    elif vlD == vlE:
         R.run(V)
-
-def VFD():
-    vultS = ultS.distance()
-    if vultS > 50:
-        pass  
+        L.run(V)
     else:
+        L.run(0)
+        R.run(0)
+        
+    while vultS > 50: 
         Alibaba.turn(245)
         wait(20)
         Alibaba.straight(210)
@@ -76,7 +106,7 @@ def VFD():
         wait(20)
         Alibaba.straight(155)
         wait(20)
-        vultS = ultS.distance()
+
     
 
 
@@ -95,12 +125,7 @@ def VFD():
         
 # def Modo_Cego():
 
-while True:
-    VFD()
+# while True:
+    
 
-    if vultS <= 50:
-        break
-
-    CProp2()
-      
     
